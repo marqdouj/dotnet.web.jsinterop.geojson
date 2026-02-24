@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Marqdouj.DotNet.Web.JsInterop.GeoJson/Marqdouj.DotNet.Web.JsInterop.GeoJson.csproj" />
+  <Project Path="Sandbox.JsInterop/Sandbox.JsInterop.csproj" />
+  <Project Path="Sandbox/Sandbox.csproj" />
+  <Project Path="SandboxTests/SandboxTests.csproj" Id="4ecc1d0a-e752-4cc2-87fa-97a89dcc2c0c" />
+</Solution>

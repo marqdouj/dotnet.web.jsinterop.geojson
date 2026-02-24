@@ -1,0 +1,115 @@
+﻿@page "/geojson"
+@using Marqdouj.DotNet.Web.JsInterop.GeoJson
+@using Sandbox.JsInterop
+@using Sandbox.Services
+@rendermode InteractiveServer
+@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
+@inject ILogger<GeoJson> Logger 
+@inject IToastService ToastService
+@inject IMapDataService DataService
+
+<PageTitle>GeoJSON</PageTitle>
+
+<FluentLayout>
+    <FluentHeader>GeoJSON</FluentHeader>
+
+    <FluentToolbar>
+        <FluentCheckbox @bind-Value="stringifyJson">Stringify Test</FluentCheckbox>
+        <FluentButton @onclick="() => TestGeometries(GeometryType.Point)">Point</FluentButton>
+        <FluentButton @onclick="() => TestGeometries(GeometryType.MultiPoint)">MultiPoint</FluentButton>
+        <FluentButton @onclick="() => TestGeometries(GeometryType.LineString)">LineString</FluentButton>
+        <FluentButton @onclick="() => TestGeometries(GeometryType.MultiLineString)">MultiLineString</FluentButton>
+        <FluentButton @onclick="() => TestGeometries(GeometryType.Polygon)">Polygon</FluentButton>
+        <FluentButton @onclick="() => TestGeometries(GeometryType.MultiPolygon)">MultiPolygon</FluentButton>
+        <FluentButton @onclick="() => TestGeometries(GeometryType.GeometryCollection)">GeometryCollection</FluentButton>
+    </FluentToolbar>
+
+    <FluentStack Orientation="Orientation.Vertical">
+        <FluentCard>
+            <FluentLabel Typo="Typography.Subject">JSInterop Result:</FluentLabel>
+            <FluentLabel>@(testResult ?? "No test run yet.")</FluentLabel>
+        </FluentCard>
+        <FluentCard>
+            <FluentLabel Typo="Typography.Subject">Deserialize Result:</FluentLabel>
+            <FluentLabel>@(deserializeResult)</FluentLabel>
+            <FluentLabel>@(deserializeJson)</FluentLabel>
+        </FluentCard>
+    </FluentStack>
+</FluentLayout>
+
+@code {
+    private SandboxJsInterop? module;
+    private string? testResult;
+    private string? deserializeResult;
+    private string? deserializeJson;
+    private bool stringifyJson;
+
+    protected override void OnInitialized()
+    {
+        module = new (JSRuntime);
+    }
+
+    private async Task TestGeometries(GeometryType type)
+    {
+        try
+        {
+            testResult = "";
+            deserializeResult = "";
+            deserializeJson = "";
+
+            GeoJsonObject? geoJSON = type switch
+            {
+                GeometryType.Point => await DataService.GetPoint(),
+                GeometryType.MultiPoint => await DataService.GetMultiPoint(),
+                GeometryType.LineString => await DataService.GetLineString(),
+                GeometryType.MultiLineString => await DataService.GetMultiLineString(),
+                GeometryType.Polygon => await DataService.GetPolygon(),
+                GeometryType.MultiPolygon => await DataService.GetMultiPolygon(),
+                GeometryType.GeometryCollection => new GeometryCollectionJson(await DataService.GetGeometryCollection()),
+                _ => throw new NotSupportedException($"Geometry type {type} is not supported.")
+            };
+
+            if (stringifyJson)
+            {
+                testResult = await module!.TestGeoJSONString(geoJSON);
+            }
+            else
+            {
+                testResult = await module!.TestGeoJSON(geoJSON);
+            }
+
+            GeoJsonObject? geoJSONResult = type switch
+            {
+                GeometryType.Point => Point.FromJson(testResult),
+                GeometryType.MultiPoint => MultiPoint.FromJson(testResult),
+                GeometryType.LineString => LineString.FromJson(testResult),
+                GeometryType.MultiLineString => MultiLineString.FromJson(testResult),
+                GeometryType.Polygon => Polygon.FromJson(testResult),
+                GeometryType.MultiPolygon => MultiPolygon.FromJson(testResult),
+                GeometryType.GeometryCollection => GeometryCollection.FromJson(testResult),
+                _ => throw new NotSupportedException($"Geometry type {type} is not supported.")
+            };
+
+            deserializeResult = geoJSONResult != null
+                ? $"Successfully deserialized JSInterop Result [{type}]."
+                : $"Failed to deserialize [{type}].";
+
+            deserializeJson = geoJSONResult?.ToJson();
+        }
+        catch (Exception ex)
+        {
+            testResult = ex.Message;
+            Logger.LogError(ex, null);
+            ToastService.ShowError(ex.Message);
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (module != null)
+        {
+            await module.DisposeAsync();
+        }
+    }
+}
