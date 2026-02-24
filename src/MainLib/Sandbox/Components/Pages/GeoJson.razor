@@ -70,6 +70,8 @@
                 _ => throw new NotSupportedException($"Geometry type {type} is not supported.")
             };
 
+            geoJSON.Bbox = new BoundingBox(0, 0, 10, 10);
+
             if (stringifyJson)
             {
                 testResult = await module!.TestGeoJSONString(geoJSON);
