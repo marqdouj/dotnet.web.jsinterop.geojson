@@ -8,12 +8,13 @@
   including Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature, and FeatureCollection.
 
 ### Serialization
-- All GeoJSON types can be serialized to JSON format using the built-in `System.Text.Json` library. 
+- All GeoJSON types can be serialized to JSON format using the built-in `System.Text.Json` library, except `GeometryCollection` which requires special handling.
   - A default `ToJson` method is provided for each type.
+  - `GeometryCollection`. This type requires special handling during serialization, as it contains a collection of geometries that can be of any GeoJSON type. 
+	The default `ToJson` method implements the requirements to correctly serialize a GeometryCollection.
 
 ### Deserialization
-  - All GeoJSON types can be serialized to JSON format using the built-in `System.Text.Json` library, 
-	except `GeometryCollection` which requires special handling. 
+  - All GeoJSON types can be serialized to JSON format using the built-in `System.Text.Json` library, except `GeometryCollection` which requires special handling. 
   - A default `FromJson` method is provided for each type.
   - `GeometryCollection`. This type requires special handling during deserialization, as it contains a collection of geometries that can be of any GeoJSON type. 
 	The default `FromJson` method implements the requirements to correctly deserialize a GeometryCollection.
