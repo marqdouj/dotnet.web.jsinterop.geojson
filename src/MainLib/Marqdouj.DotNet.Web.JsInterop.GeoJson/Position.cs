@@ -54,7 +54,6 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
                 _data.Add(elevation.Value);
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -107,21 +106,36 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         /// <see href="https://datatracker.ietf.org/doc/html/rfc7946#section-4"/>
         /// </summary>
         [JsonIgnore]
-        public double Longitude => _data[0];
+        public double Longitude { get => _data[0]; set => _data[0] = value; }
 
         /// <summary>
         /// Latitude in decimal degrees.
         /// <see href="https://datatracker.ietf.org/doc/html/rfc7946#section-4"/>
         /// </summary>
         [JsonIgnore]
-        public double Latitude => _data[1];
+        public double Latitude { get => _data[1]; set => _data[1] = value; }
 
         /// <summary>
         /// Elevation in meters.
         /// <see href="https://datatracker.ietf.org/doc/html/rfc7946#section-4"/>
         /// </summary>
         [JsonIgnore]
-        public double? Elevation => Is3D ? _data[2] : null;
+        public double? Elevation 
+        { 
+            get => Is3D ? _data[2] : null; 
+            set 
+            {
+                if (value != null)
+                {
+                    _data.EnsureCount(3, 3);
+                    _data[2] = value.Value;
+                }
+                else
+                {
+                    _data.EnsureCount(2, 2);
+                }
+            } 
+        }
 
         #endregion
 

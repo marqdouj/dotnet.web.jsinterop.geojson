@@ -23,4 +23,7 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.1.0`: 
+  - `Position`. Longitude, Latitude, and Elevation have been changed to full properties.
+
 - `v10.0.0`: Initial release with basic GeoJSON parsing and generation capabilities.

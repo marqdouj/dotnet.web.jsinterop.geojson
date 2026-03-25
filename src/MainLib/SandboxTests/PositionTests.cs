@@ -1,4 +1,5 @@
 ﻿using Marqdouj.DotNet.Web.JsInterop.GeoJson;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 using System.Text.Json;
 
 namespace SandboxTests
@@ -216,6 +217,138 @@ namespace SandboxTests
             Assert.IsFalse(position.Is2D);
             Assert.IsTrue(position.Is3D);
             ValidatePosition(position, elevation);
+        }
+
+        #endregion
+
+        #region Latitude
+
+        [TestMethod]
+        public void Position_Latitude_Get()
+        {
+            //Arrange
+            var position = new Position(longitude, latitude);
+
+            //Act
+            var value = position.Latitude;
+
+            //Assert
+            Assert.AreEqual(latitude, value);
+            Assert.IsTrue(position.IsValid);
+            Assert.IsTrue(position.Is2D);
+            Assert.IsFalse(position.Is3D);
+        }
+
+        [TestMethod]
+        public void Position_Latitude_Set()
+        {
+            //Arrange
+            var position = new Position([1, 2]);
+
+            //Act
+            var value = position.Latitude;
+            position.Latitude = latitude;
+
+            //Assert
+            Assert.AreEqual(2, value);
+            Assert.AreEqual(latitude, position.Latitude);
+            Assert.IsTrue(position.IsValid);
+            Assert.IsTrue(position.Is2D);
+            Assert.IsFalse(position.Is3D);
+        }
+
+        #endregion
+
+        #region Longitude
+
+        [TestMethod]
+        public void Position_Longitude_Get()
+        {
+            //Arrange
+            var position = new Position(longitude, latitude);
+
+            //Act
+            var value = position.Longitude;
+
+            //Assert
+            Assert.AreEqual(longitude, value);
+            Assert.IsTrue(position.IsValid);
+            Assert.IsTrue(position.Is2D);
+            Assert.IsFalse(position.Is3D);
+        }
+
+        [TestMethod]
+        public void Position_Longitude_Set()
+        {
+            //Arrange
+            var position = new Position([1, 2]);
+
+            //Act
+            var value = position.Longitude;
+            position.Longitude = longitude;
+
+            //Assert
+            Assert.AreEqual(1, value);
+            Assert.AreEqual(longitude, position.Longitude);
+            Assert.IsTrue(position.IsValid);
+            Assert.IsTrue(position.Is2D);
+            Assert.IsFalse(position.Is3D);
+        }
+
+        #endregion
+
+        #region Elevation
+
+        [TestMethod]
+        public void Position_Elevation_Get()
+        {
+            //Arrange
+            var position = new Position(longitude, latitude, elevation3D);
+
+            //Act
+            var value = position.Elevation;
+
+            //Assert
+            Assert.AreEqual(elevation3D, value);
+            Assert.IsTrue(position.IsValid);
+            Assert.IsFalse(position.Is2D);
+            Assert.IsTrue(position.Is3D);
+        }
+
+        [TestMethod]
+        public void Position_Elevation_Set()
+        {
+            //Arrange
+            var position = new Position([1, 2, 3]);
+
+            //Act
+            var value = position.Elevation;
+            position.Elevation = elevation3D;
+
+            //Assert
+            Assert.AreEqual(3, value);
+            Assert.AreEqual(elevation3D, position.Elevation);
+            Assert.IsTrue(position.IsValid);
+            Assert.IsFalse(position.Is2D);
+            Assert.IsTrue(position.Is3D);
+        }
+
+        [TestMethod]
+        public void Position_Elevation_Set_Null()
+        {
+            //Arrange
+            var position = new Position([1, 2, 3]);
+
+            //Act
+            var value = position.Elevation;
+            position.Elevation = elevation2D;
+
+            //Assert
+            Assert.AreEqual(3, value);
+            Assert.AreEqual(elevation2D, position.Elevation);
+            Assert.IsTrue(position.IsValid);
+            Assert.IsTrue(position.Is2D);
+            Assert.IsFalse(position.Is3D);
         }
 
         #endregion
