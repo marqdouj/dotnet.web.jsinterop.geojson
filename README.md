@@ -23,6 +23,9 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.2.0`
+  - Added interface `IBoundingBoxEdit` for editing `BoundingBox` instances.
+
 - `v10.1.1`
   - Update NuGet packages.
 

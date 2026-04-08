@@ -184,5 +184,227 @@ namespace SandboxTests
         }
 
         #endregion
+
+        #region IBoundingBoxEdit
+
+        #region West
+
+        [TestMethod]
+        public void IBoundingBoxEdit_West_2d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit) new BoundingBox(west, south, east, north);
+            var newWest = west + 1.2345;
+
+            //Act
+            bbox.West = newWest;
+
+            //Assert
+            Assert.AreEqual(newWest, bbox.West);
+        }
+
+        [TestMethod]
+        public void IBoundingBoxEdit_West_3d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, swElevation, east, north, neElevation);
+            var newWest = west + 1.2345;
+
+            //Act
+            bbox.West = newWest;
+
+            //Assert
+            Assert.AreEqual(newWest, bbox.West);
+        }
+
+        #endregion
+
+        #region South
+
+        [TestMethod]
+        public void IBoundingBoxEdit_South_2d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, east, north);
+            var newSouth = south + 1.2345;
+
+            //Act
+            bbox.South = newSouth;
+
+            //Assert
+            Assert.AreEqual(newSouth, bbox.South);
+        }
+
+        [TestMethod]
+        public void IBoundingBoxEdit_South_3d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, swElevation, east, north, neElevation);
+            var newSouth = south + 1.2345;
+
+            //Act
+            bbox.South = newSouth;
+
+            //Assert
+            Assert.AreEqual(newSouth, bbox.South);
+        }
+
+        #endregion
+
+        #region East
+
+        [TestMethod]
+        public void IBoundingBoxEdit_East_2d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, east, north);
+            var newEast = east + 1.2345;
+
+            //Act
+            bbox.East = newEast;
+
+            //Assert
+            Assert.AreEqual(newEast, bbox.East);
+        }
+
+        [TestMethod]
+        public void IBoundingBoxEdit_East_3d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, swElevation, east, north, neElevation);
+            var newEast = east + 1.2345;
+
+            //Act
+            bbox.East = newEast;
+
+            //Assert
+            Assert.AreEqual(newEast, bbox.East);
+        }
+
+        #endregion
+
+        #region North
+
+        [TestMethod]
+        public void IBoundingBoxEdit_North_2d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, east, north);
+            var newNorth = north + 1.2345;
+
+            //Act
+            bbox.North = newNorth;
+
+            //Assert
+            Assert.AreEqual(newNorth, bbox.North);
+        }
+
+        [TestMethod]
+        public void IBoundingBoxEdit_North_3d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, swElevation, east, north, neElevation);
+            var newNorth = north + 1.2345;
+
+            //Act
+            bbox.North = newNorth;
+
+            //Assert
+            Assert.AreEqual(newNorth, bbox.North);
+        }
+
+        #endregion
+
+        #region Elevation1
+
+        [TestMethod]
+        public void IBoundingBoxEdit_Elevation1_2d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, east, north);
+            var newValue = swElevation + 1.2345;
+
+            //Act
+            bbox.Elevation1 = newValue;
+
+            //Assert
+            Assert.IsNull(bbox.Elevation1);
+        }
+
+        [TestMethod]
+        public void IBoundingBoxEdit_Elevation1_3d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, swElevation, east, north, neElevation);
+            var newValue = swElevation + 1.2345;
+
+            //Act
+            bbox.Elevation1 = newValue;
+
+            //Assert
+            Assert.AreEqual(newValue, bbox.Elevation1);
+        }
+
+        [TestMethod]
+        public void IBoundingBoxEdit_Elevation1_3d_NullValue()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, swElevation, east, north, neElevation);
+
+            //Act
+            bbox.Elevation1 = null;
+
+            //Assert
+            Assert.AreEqual(swElevation, bbox.Elevation1);
+        }
+
+        #endregion
+
+        #region Elevation2
+
+        [TestMethod]
+        public void IBoundingBoxEdit_Elevation2_2d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, east, north);
+            var newValue = neElevation + 1.2345;
+
+            //Act
+            bbox.Elevation2 = newValue;
+
+            //Assert
+            Assert.IsNull(bbox.Elevation2);
+        }
+
+        [TestMethod]
+        public void IBoundingBoxEdit_Elevation2_3d()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, swElevation, east, north, neElevation);
+            var newValue = neElevation + 1.2345;
+
+            //Act
+            bbox.Elevation2 = newValue;
+
+            //Assert
+            Assert.AreEqual(newValue, bbox.Elevation2);
+        }
+
+        [TestMethod]
+        public void IBoundingBoxEdit_Elevation2_3d_NullValue()
+        {
+            //Arrange
+            var bbox = (IBoundingBoxEdit)new BoundingBox(west, south, swElevation, east, north, neElevation);
+
+            //Act
+            bbox.Elevation2 = null;
+
+            //Assert
+            Assert.AreEqual(neElevation, bbox.Elevation2);
+        }
+
+        #endregion
+
+        #endregion
     }
 }

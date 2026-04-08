@@ -6,6 +6,46 @@ using System.Text.Json.Serialization;
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Edit a <see cref="BoundingBox"/> with this interface. This is useful for scenarios where you want to modify the BoundingBox after creation.
+    /// </summary>
+    public interface IBoundingBoxEdit
+    {
+        /// <summary>
+        /// Gets or sets the westernmost coordinate value.
+        /// </summary>
+        double West { get; set; }   
+
+        /// <summary>
+        /// Gets or sets the southern boundary coordinate.
+        /// </summary>
+        double South { get; set; }
+
+        /// <summary>
+        /// Gets or sets the east coordinate value.
+        /// </summary>
+        double East { get; set; }
+
+        /// <summary>
+        /// Gets or sets the north coordinate value.
+        /// </summary>
+        double North { get; set; }
+
+        /// <summary>
+        /// Gets or sets the first elevation value associated with the entity. 
+        /// If the BoundingBox is 2D then this value is null and setting it will have no effect.
+        /// Setting this value to null has no effect. To remove elevation from a BoundingBox, create a new 2D BoundingBox with the desired west, south, east, and north values.
+        /// </summary>
+        double? Elevation1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the second elevation value associated with the entity. 
+        /// If the BoundingBox is 2D then this value is null and setting it will have no effect.
+        /// Setting this value to null has no effect. To remove elevation from a BoundingBox, create a new 2D BoundingBox with the desired west, south, east, and north values.
+        /// </summary>
+        double? Elevation2 { get; set; }
+    }
+
+    /// <summary>
     /// A GeoJSON BoundingBox. Supports exactly 4 (2D) or 6 (3D including elevation) doubles.
     /// <see href="https://datatracker.ietf.org/doc/html/rfc7946#section-5"/>.
     /// </summary>
@@ -13,7 +53,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
     /// [west, south, east, north] or [west, south, elevation1, east, north, elevation2]
     /// </remarks>
     [JsonConverter(typeof(JsonBoundingBoxConverter))]
-    public class BoundingBox : IReadOnlyList<double>, ICloneable
+    public class BoundingBox : IReadOnlyList<double>, ICloneable, IBoundingBoxEdit
     {
         private readonly List<double> _data;
 
@@ -176,6 +216,20 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
                 return null;
             }
         }
+
+        private static int WestIndex => 0;
+        private static int SouthIndex => 1;
+        private int EastIndex => Is2D ? 2 : 3;
+        private int NorthIndex => Is2D ? 3 : 4;
+        private int Elevation1Index => Is2D ? -1 : 2;
+        private int Elevation2Index => Is2D ? -1 : 5;
+
+        double IBoundingBoxEdit.West { get => _data[WestIndex]; set { _data[WestIndex] = value; } }
+        double IBoundingBoxEdit.South { get => _data[SouthIndex]; set { _data[SouthIndex] = value; } }
+        double IBoundingBoxEdit.East { get => _data[EastIndex]; set { _data[EastIndex] = value; } }
+        double IBoundingBoxEdit.North { get => _data[NorthIndex]; set { _data[NorthIndex] = value; } }
+        double? IBoundingBoxEdit.Elevation1 { get { return Is3D ? _data[Elevation1Index] : null; } set { if (Is2D || value is null) return; _data[Elevation1Index] = value.Value; } }
+        double? IBoundingBoxEdit.Elevation2 { get { return Is3D ? _data[Elevation2Index] : null; } set { if (Is2D || value is null) return; _data[Elevation2Index] = value.Value; } }
 
         #endregion
 
