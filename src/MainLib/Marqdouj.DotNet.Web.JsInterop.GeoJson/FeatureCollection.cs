@@ -55,9 +55,9 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         /// <param name="json"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static FeatureCollection<T, GeoJsonProperties>? FromJson<T>(string? json, JsonSerializerOptions? options = null) where T : Geometry
+        public static FeatureCollection<T, P>? FromJson<T>(string? json, JsonSerializerOptions? options = null) where T : Geometry
         {
-            return string.IsNullOrWhiteSpace(json) ? null : JsonSerializer.Deserialize<FeatureCollection<T, GeoJsonProperties>>(json, options ?? GeoJsonDomain.JsonSerializerOptions);
+            return string.IsNullOrWhiteSpace(json) ? null : JsonSerializer.Deserialize<FeatureCollection<T, P>>(json, options ?? GeoJsonDomain.JsonSerializerOptions);
         }
 
         #endregion
