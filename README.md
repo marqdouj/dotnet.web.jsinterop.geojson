@@ -23,6 +23,9 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.3.1`
+  - `Position`. Added `ToString(string format)` method.
+
 - `v10.3.0`
   - Changed method signature `FeatureCollection<T, GeoJsonProperties>? FromJson<T>` to `FeatureCollection<T, P>? FromJson<T>`.
 

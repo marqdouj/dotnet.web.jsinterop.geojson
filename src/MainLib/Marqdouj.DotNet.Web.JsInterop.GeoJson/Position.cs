@@ -165,11 +165,32 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 
         #endregion
 
+
+        /// <summary>
+        /// <see cref="Object.ToString"/> using a format specifier.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public string ToString(string format)
+        {
+            if (string.IsNullOrWhiteSpace(format))
+                return ToString();
+
+            return Elevation.HasValue
+                ? $"[{Longitude.ToString(format)}, {Latitude.ToString(format)}, {Elevation.Value.ToString(format)}]"
+                : $"[{Longitude.ToString(format)}, {Latitude.ToString(format)}]";
+        }
+
         /// <summary>
         /// <see cref="object.ToString()"/>
         /// </summary>
         /// <returns></returns>
-        public override string ToString() => "[" + string.Join(", ", _data) + "]";
+        public override string ToString()
+        {
+            return Elevation.HasValue
+                ? $"[{Longitude}, {Latitude}, {Elevation.Value}]"
+                : $"[{Longitude}, {Latitude}]";
+        }
 
         #region IEquatable
 
