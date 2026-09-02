@@ -23,6 +23,9 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.4.0`
+  - Update NuGet packages.
+	- 
 - `v10.3.1`
   - `Position`. Added `ToString(string format)` method.
 
