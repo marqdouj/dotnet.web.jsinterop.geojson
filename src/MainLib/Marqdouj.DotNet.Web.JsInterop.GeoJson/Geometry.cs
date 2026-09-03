@@ -3,9 +3,20 @@
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface for all Geometry types <see cref="GeometryType"/>.
+    /// </summary>
+    public interface IGeometry
+    {
+        /// <summary>
+        /// <see cref="GeometryType"/>
+        /// </summary>
+        GeometryType Type { get; }
+    }
+
+    /// <summary>
     /// Base class for all Geometry types <see cref="GeometryType"/>.
     /// </summary>
-    public abstract class Geometry(GeometryType type) : GeoJsonObject((GeoJsonType)type)
+    public abstract class Geometry(GeometryType type) : GeoJsonObject((GeoJsonType)type), IGeometry
     {
         /// <summary>
         /// <see cref="GeometryType"/>

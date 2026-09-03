@@ -23,9 +23,12 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.5.0`
+  - `IGeometry` interface added to the `Geometry` base class. Helps with type checking and casting of geometry types, especially when working with c# `Generics`.
+
 - `v10.4.0`
   - Update NuGet packages.
-	- 
+
 - `v10.3.1`
   - `Position`. Added `ToString(string format)` method.
 
