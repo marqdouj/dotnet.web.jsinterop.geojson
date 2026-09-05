@@ -3,10 +3,31 @@
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface to identity any type of feature that implements <see cref="IFeatureCollection{G, P}"/>.
+    /// </summary>
+    public interface IFeatureCollection : ICloneable
+    {
+
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="FeatureCollection{G, P}"/>
+    /// </summary>
+    /// <typeparam name="G"></typeparam>
+    /// <typeparam name="P"></typeparam>
+    public interface IFeatureCollection<G, P> : IFeatureCollection where G : Geometry
+    {
+        /// <summary>
+        /// <inheritdoc cref="FeatureCollection{G, P}.Features"/>
+        /// </summary>
+        List<Feature<G, P>>? Features { get; set; }
+    }
+
+    /// <summary>
     /// <![CDATA[FeatureCollection<G, P>]]> — collection of features.
     /// <see href="https://datatracker.ietf.org/doc/html/rfc7946#section-3.3"/>
     /// </summary>
-    public class FeatureCollection<G, P>() : GeoJsonObject(GeoJsonType.FeatureCollection) where G : Geometry
+    public class FeatureCollection<G, P>() : GeoJsonObject(GeoJsonType.FeatureCollection), IFeatureCollection<G, P> where G : Geometry
     {
         /// <summary>
         /// 
@@ -14,14 +35,14 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         /// <param name="features"><see cref="Feature{G, P}"/></param>
         /// <param name="bbox"><see cref="BoundingBox"/></param>
         /// <exception cref="ArgumentException"></exception>
-        public FeatureCollection(IEnumerable<Feature<G, P>>? features = null, BoundingBox? bbox = null) :this()
+        public FeatureCollection(IEnumerable<Feature<G, P>>? features = null, BoundingBox? bbox = null) : this()
         {
             Features = features?.ToList();
             Bbox = bbox;
         }
 
         /// <summary>
-        /// List of features.
+        /// List of <see cref="Feature{G, P}"/>.
         /// </summary>
         public List<Feature<G, P>>? Features { get; set; }
 

@@ -3,17 +3,28 @@
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface that identifies a <see cref="GeometryCollection"/>
+    /// </summary>
+    public interface IGeometryCollection : ICloneable
+    {
+        /// <summary>
+        /// <inheritdoc cref="GeometryCollection.Geometries"/>
+        /// </summary>
+        List<Geometry> Geometries { get; set; }
+    }
+
+    /// <summary>
     /// GeometryCollection: List of Geometry objects.
     /// <see href="https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.8"/>
     /// </summary>
-    public class GeometryCollection() : Geometry(GeometryType.GeometryCollection)
+    public class GeometryCollection() : Geometry(GeometryType.GeometryCollection), IGeometryCollection
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="geometries"><see cref="Geometry"/></param>
         /// <param name="bbox"><see cref="BoundingBox"/></param>
-        public GeometryCollection(IEnumerable<Geometry> geometries, BoundingBox? bbox = null) : this() 
+        public GeometryCollection(IEnumerable<Geometry> geometries, BoundingBox? bbox = null) : this()
         {
             Geometries = [.. geometries];
             Bbox = bbox;

@@ -6,6 +6,27 @@ using System.Text.Json.Serialization;
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface that identifies a <see cref="Position"/>
+    /// </summary>
+    public interface IPosition : ICloneable
+    {
+        /// <summary>
+        /// <inheritdoc cref="Position.Elevation"/>
+        /// </summary>
+        double? Elevation { get; set; }
+
+        /// <summary>
+        /// <inheritdoc cref="Position.Latitude"/>
+        /// </summary>
+        double Latitude { get; set; }
+
+        /// <summary>
+        /// <inheritdoc cref="Position.Longitude"/>
+        /// </summary>
+        double Longitude { get; set; }
+    }
+
+    /// <summary>
     /// A GeoJSON Position - a geographical location specifying
     /// longitude and latitude in decimal degrees, and optionally an elevation in meters.
     /// <see href="https://tools.ietf.org/html/rfc7946#section-3.1.1"/>
@@ -14,7 +35,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
     /// [longitude, latitude] or [longitude, latitude, elevation]
     /// </remarks>
     [JsonConverter(typeof(JsonPositionConverter))]
-    public class Position : IReadOnlyList<double>, IGeoJSON, ICloneable, IEquatable<Position>
+    public class Position : IReadOnlyList<double>, IGeoJSON, IEquatable<Position>, IPosition
     {
         private readonly List<double> _data;
 
@@ -120,10 +141,10 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         /// <see href="https://datatracker.ietf.org/doc/html/rfc7946#section-4"/>
         /// </summary>
         [JsonIgnore]
-        public double? Elevation 
-        { 
-            get => Is3D ? _data[2] : null; 
-            set 
+        public double? Elevation
+        {
+            get => Is3D ? _data[2] : null;
+            set
             {
                 if (value != null)
                 {
@@ -134,7 +155,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
                 {
                     _data.EnsureCount(2, 2);
                 }
-            } 
+            }
         }
 
         #endregion
@@ -156,7 +177,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         /// <returns></returns>
         public static Position? FromJson(string? json, JsonSerializerOptions? options = null)
         {
-            if (string.IsNullOrWhiteSpace(json)) 
+            if (string.IsNullOrWhiteSpace(json))
                 return null;
 
             var result = JsonSerializer.Deserialize<List<double>>(json, options ?? GeoJsonDomain.JsonSerializerOptions);

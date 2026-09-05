@@ -3,9 +3,20 @@
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface that identifies a <see cref="Polygon"/>
+    /// </summary>
+    public interface IPolygon : ICloneable
+    {
+        /// <summary>
+        /// <inheritdoc cref="Polygon.Coordinates"/>
+        /// </summary>
+        List<List<Position>> Coordinates { get; set; }
+    }
+
+    /// <summary>
     /// <see cref="GeoJsonType.Polygon"/>
     /// </summary>
-    public class Polygon() : Geometry(GeometryType.Polygon)
+    public class Polygon() : Geometry(GeometryType.Polygon), IPolygon
     {
         /// <summary>
         /// 
@@ -20,7 +31,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         public Polygon(List<Position> coordinates) : this() => Coordinates = [coordinates];
 
         /// <summary>
-        /// 
+        /// Parts of the polygon. Lists of <see cref="Position"/>.
         /// </summary>
         public List<List<Position>> Coordinates { get; set => field = value ?? []; } = [];
 

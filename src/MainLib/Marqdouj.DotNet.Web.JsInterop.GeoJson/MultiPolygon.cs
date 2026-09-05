@@ -3,9 +3,20 @@
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface that identifies a <see cref="MultiPolygon"/>
+    /// </summary>
+    public interface IMultiPolygon : ICloneable
+    {
+        /// <summary>
+        /// <inheritdoc cref="MultiPolygon.Coordinates"/>
+        /// </summary>
+        List<List<List<Position>>> Coordinates { get; set; }
+    }
+
+    /// <summary>
     /// <see cref="GeoJsonType.MultiPolygon"/>
     /// </summary>
-    public class MultiPolygon() : Geometry(GeometryType.MultiPolygon)
+    public class MultiPolygon() : Geometry(GeometryType.MultiPolygon), IMultiPolygon
     {
         /// <summary>
         /// 
@@ -20,7 +31,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         public MultiPolygon(List<Polygon> polygons) : this() => Coordinates = [.. polygons.Select(p => p.Coordinates)];
 
         /// <summary>
-        /// 
+        /// Polygon parts. Lists of <see cref="Position"/>
         /// </summary>
         /// <param name="coordinates"></param>
         public MultiPolygon(List<List<Position>> coordinates) : this() => Coordinates = [coordinates];

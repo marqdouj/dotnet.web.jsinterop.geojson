@@ -3,12 +3,42 @@
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface to identity any type of feature that implements <see cref="IFeature{G, P}"/>.
+    /// </summary>
+    public interface IFeature : ICloneable
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="Feature{G, P}"/>
+    /// </summary>
+    /// <typeparam name="G"></typeparam>
+    /// <typeparam name="P"></typeparam>
+    public interface IFeature<G, P> : IFeature where G : Geometry
+    {
+        /// <summary>
+        /// <inheritdoc cref="Feature{G, P}.Geometry"/>
+        /// </summary>
+        G? Geometry { get; set; }
+
+        /// <summary>
+        /// <inheritdoc cref="Feature{G, P}.Id"/>
+        /// </summary>
+        object? Id { get; set; }
+
+        /// <summary>
+        /// <inheritdoc cref="Feature{G, P}.Properties"/>
+        /// </summary>
+        P? Properties { get; set; }
+    }
+
+    /// <summary>
     /// <![CDATA[Feature<G, P>]]> — generic Feature object.
     /// G represents the geometry type (subclass of Geometry). Geometry MAY be null for a Feature.
     /// P represents properties (dictionary mapping string to any) and can be null.
     /// <see href="https://datatracker.ietf.org/doc/html/rfc7946#section-3.2"/>
     /// </summary>
-    public class Feature<G, P>() : GeoJsonObject(GeoJsonType.Feature) where G : Geometry
+    public class Feature<G, P>() : GeoJsonObject(GeoJsonType.Feature), IFeature<G, P> where G : Geometry
     {
         /// <summary>
         /// 
@@ -63,7 +93,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         }
 
         /// <summary>
-        /// <see cref="ICloneable.Clone"/>
+        /// <inheritdoc/>
         /// </summary>
         /// <returns></returns>
         public override object Clone()

@@ -5,7 +5,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
     /// <summary>
     /// Interface for all Geometry types <see cref="GeometryType"/>.
     /// </summary>
-    public interface IGeometry : IGeoJSON
+    public interface IGeometry : IGeoJSON, ICloneable
     {
         /// <summary>
         /// <see cref="GeometryType"/>

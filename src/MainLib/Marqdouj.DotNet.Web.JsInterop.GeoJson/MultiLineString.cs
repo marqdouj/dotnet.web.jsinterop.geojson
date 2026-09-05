@@ -3,9 +3,20 @@
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface that identifies a <see cref="MultiLineString"/>
+    /// </summary>
+    public interface IMultiLineString : ICloneable
+    {
+        /// <summary>
+        /// <inheritdoc cref="MultiLineString.Coordinates"/>
+        /// </summary>
+        List<List<Position>> Coordinates { get; set; }
+    }
+
+    /// <summary>
     /// <see cref="GeoJsonType.MultiLineString"/>
     /// </summary>
-    public class MultiLineString() : Geometry(GeometryType.MultiLineString)
+    public class MultiLineString() : Geometry(GeometryType.MultiLineString), IMultiLineString
     {
         /// <summary>
         /// 
@@ -14,7 +25,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         public MultiLineString(List<List<Position>> coordinates) : this() => Coordinates = coordinates;
 
         /// <summary>
-        /// 
+        /// Coordinate parts.
         /// </summary>
         public List<List<Position>> Coordinates { get; set => field = value ?? []; } = [];
 
@@ -31,7 +42,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
             foreach (var line in Coordinates)
             {
                 var items = line.Select(p => (Position)p.Clone()).ToList();
-                coordinates.Add(items); 
+                coordinates.Add(items);
             }
             clone.Coordinates = coordinates;
 

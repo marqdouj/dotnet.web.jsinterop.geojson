@@ -3,9 +3,20 @@
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface that identifies a <see cref="LineString"/>
+    /// </summary>
+    public interface ILineString : ICloneable
+    {
+        /// <summary>
+        /// <inheritdoc cref="LineString.Coordinates"/>
+        /// </summary>
+        List<Position> Coordinates { get; set; }
+    }
+
+    /// <summary>
     /// <see cref="GeoJsonType.LineString"/>
     /// </summary>
-    public class LineString() : Geometry(GeometryType.LineString)
+    public class LineString() : Geometry(GeometryType.LineString), ILineString
     {
         /// <summary>
         /// 
@@ -14,12 +25,12 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         public LineString(List<Position> coordinates) : this() => Coordinates = coordinates;
 
         /// <summary>
-        /// 
+        /// List of <inheritdoc cref="Position"/>
         /// </summary>
         public List<Position> Coordinates { get; set => field = value ?? []; } = [];
 
         /// <summary>
-        /// <see cref="ICloneable.Clone"/>
+        /// <inheritdoc/>
         /// </summary>
         /// <returns></returns>
         public override object Clone()

@@ -23,6 +23,21 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.5.2`
+  - `Interfaces`. Added interfaces to all IGeoJSON objects to identify their specific types.
+	- Helps with type checking and casting of types, especially when working with c# `Generics`.
+	- The new interfaces are: 
+	  - `IFeature`, `IFeature{G, P}: IFeature where G : Geometry`.
+	  - `IFeatureCollection`, `IFeatureCollection{G, P} : IFeatureCollection where G : Geometry`.
+	  - `IGeometryCollection`.
+	  - `ILineString`.
+	  - `IMultiLineString`.
+	  - `IMultiPoint`.
+	  - `IMultiPolygon`.
+	  - `IPoint`.
+	  - `IPolygon`.
+	  - `IPosition`.
+
 - `v10.5.1`
   - `IGeoJsonObject`. Interface added to identify objects that derive from `GeoJsonObject`.
 	- Helps with type checking and casting of types, especially when working with c# `Generics`.

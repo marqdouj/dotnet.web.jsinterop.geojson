@@ -3,9 +3,20 @@
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface that identifies a <see cref="Point"/>
+    /// </summary>
+    public interface IPoint : ICloneable
+    {
+        /// <summary>
+        /// <inheritdoc cref="Point.Coordinates"/>
+        /// </summary>
+        Position Coordinates { get; set; }
+    }
+
+    /// <summary>
     /// <see cref="GeoJsonType.Point"/>
     /// </summary>
-    public class Point() : Geometry(GeometryType.Point)
+    public class Point() : Geometry(GeometryType.Point), IPoint
     {
         /// <summary>
         /// 
@@ -19,10 +30,10 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         /// <param name="longitude"></param>
         /// <param name="latitude"></param>
         /// <param name="elevation"></param>
-        public Point(double longitude, double latitude, double? elevation = null) : this() => Coordinates = new (longitude, latitude, elevation);
+        public Point(double longitude, double latitude, double? elevation = null) : this() => Coordinates = new(longitude, latitude, elevation);
 
         /// <summary>
-        /// 
+        /// <see cref="Position"/>
         /// </summary>
         public Position Coordinates { get; set => field = value ?? new(0, 0); } = new(0, 0);
 

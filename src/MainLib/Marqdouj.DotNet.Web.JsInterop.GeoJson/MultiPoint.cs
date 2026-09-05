@@ -3,9 +3,20 @@
 namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 {
     /// <summary>
+    /// Interface that identifies a <see cref="MultiPoint"/>
+    /// </summary>
+    public interface IMultiPoint : ICloneable
+    {
+        /// <summary>
+        /// <inheritdoc cref="MultiPoint.Coordinates"/>
+        /// </summary>
+        List<Position> Coordinates { get; set; }
+    }
+
+    /// <summary>
     /// <see cref="GeoJsonType.MultiPoint"/>
     /// </summary>
-    public class MultiPoint() : Geometry(GeometryType.MultiPoint)
+    public class MultiPoint() : Geometry(GeometryType.MultiPoint), IMultiPoint
     {
         /// <summary>
         /// 
@@ -14,7 +25,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         public MultiPoint(List<Position> coordinates) : this() => Coordinates = coordinates;
 
         /// <summary>
-        /// 
+        /// List of <see cref="Position"/>
         /// </summary>
         public List<Position> Coordinates { get; set => field = value ?? []; } = [];
 
