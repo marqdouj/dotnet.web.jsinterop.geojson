@@ -23,6 +23,12 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.5.1`
+  - `IGeoJsonObject`. Interface added to identify objects that derive from `GeoJsonObject`.
+	- Helps with type checking and casting of types, especially when working with c# `Generics`.
+  - `IGeoJSON`. Interface added to identify objects used in GeoJSON operations. Includes `Position`, `IGeoJsonObject` and `IGeometry`.
+	- Helps with type checking and casting of types, especially when working with c# `Generics`.
+
 - `v10.5.0`
   - `IGeometry` interface added to the `Geometry` base class. Helps with type checking and casting of geometry types, especially when working with c# `Generics`.
 

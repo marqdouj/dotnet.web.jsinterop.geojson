@@ -14,7 +14,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
     /// [longitude, latitude] or [longitude, latitude, elevation]
     /// </remarks>
     [JsonConverter(typeof(JsonPositionConverter))]
-    public class Position : IReadOnlyList<double>, ICloneable, IEquatable<Position>
+    public class Position : IReadOnlyList<double>, IGeoJSON, ICloneable, IEquatable<Position>
     {
         private readonly List<double> _data;
 
