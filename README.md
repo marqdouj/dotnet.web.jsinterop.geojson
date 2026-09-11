@@ -23,6 +23,8 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.6.0`
+  - `Pixel/IPixel`. New object/interface for a Pixel.
 - `v10.5.2`
   - `Interfaces`. Added interfaces to all IGeoJSON objects to identify their specific types.
 	- Helps with type checking and casting of types, especially when working with c# `Generics`.
