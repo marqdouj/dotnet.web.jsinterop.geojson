@@ -7,6 +7,10 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
     /// </summary>
     public interface IFeature : ICloneable
     {
+        /// <summary>
+        /// <inheritdoc cref="Feature{G, P}.Id"/>
+        /// </summary>
+        object? Id { get; set; }
     }
 
     /// <summary>
@@ -20,11 +24,6 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         /// <inheritdoc cref="Feature{G, P}.Geometry"/>
         /// </summary>
         G? Geometry { get; set; }
-
-        /// <summary>
-        /// <inheritdoc cref="Feature{G, P}.Id"/>
-        /// </summary>
-        object? Id { get; set; }
 
         /// <summary>
         /// <inheritdoc cref="Feature{G, P}.Properties"/>
