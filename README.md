@@ -23,6 +23,8 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.6.1`
+  - `IFeature`. Add `Id` to interface.
 - `v10.6.0`
   - `Pixel/IPixel`. New object/interface for a Pixel.
 - `v10.5.2`
