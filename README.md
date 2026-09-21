@@ -23,6 +23,8 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.7.0`
+  - `GeoJsonProperties`. A second constructor has been added that allows you to specify StringComparer.
 - `v10.6.2`
   - `Feature.Id`. Default is now a [Guid](https://learn.microsoft.com/en-us/dotnet/api/system.guid.createversion7) string.
 - `v10.6.1`
