@@ -27,11 +27,10 @@ namespace SandboxTests
             return coordinates;
         }
 
-        internal static Feature<Point, GeoJsonProperties> GetPointFeature()
+        internal static Feature<Point, GeoJsonProperties> GetPointFeature(string? id = "point-1")
         {
-            return new()
+            return new(id: id)
             {
-                Id = "point-1",
                 Geometry = new Point(new Position(1.0, 2.0)),
                 Properties = new GeoJsonProperties
             {

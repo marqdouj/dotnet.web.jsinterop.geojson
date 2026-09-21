@@ -5,6 +5,17 @@ namespace SandboxTests
     [TestClass]
     public sealed class FeatureTests
     {
+        [TestMethod]
+        public void Feature_Id_Default()
+        {
+            //Arrange
+            //Act
+            var feature = DataService.GetPointFeature(null);
+
+            //Assert
+            Assert.IsNotNull(feature.Id);
+        }
+
         #region Serialization
 
         #region Point

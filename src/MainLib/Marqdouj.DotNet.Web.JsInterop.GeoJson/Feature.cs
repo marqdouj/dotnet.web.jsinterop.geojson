@@ -50,7 +50,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
         {
             Geometry = geometry;
             Properties = properties;
-            Id = id;
+            Id = id ?? Guid.CreateVersion7().ToString(); ;
             Bbox = bbox;
         }
 
@@ -61,6 +61,7 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
 
         /// <summary>
         /// Id can be string or number in original spec; we model as object? (string, int, long, double, or null).
+        /// Default is a Guid string: <see href="https://learn.microsoft.com/en-us/dotnet/api/system.guid.createversion7"/>.
         /// </summary>
         public object? Id { get; set; }
 
