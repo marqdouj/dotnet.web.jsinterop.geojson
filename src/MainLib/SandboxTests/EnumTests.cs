@@ -33,5 +33,49 @@ namespace SandboxTests
                 }
             }
         }
+
+        [TestMethod]
+        public void GeometryType_ToGeometryType_True()
+        {
+            var target = GeometryType.GeometryCollection;
+            var value = target.ToString();
+
+            var result = value.ToGeometryType();
+
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GeoJsonType_ToGeoJsonType_True()
+        {
+            var target = GeoJsonType.GeometryCollection;
+            var value = target.ToString();
+
+            var result = value.ToGeoJsonType();
+
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GeometryType_ToGeometryType_False()
+        {
+            var target = GeometryType.GeometryCollection;
+            var value = "badvalue";
+
+            var result = value.ToGeometryType();
+
+            Assert.AreNotEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GeoJsonType_ToGeoJsonType_False()
+        {
+            var target = GeoJsonType.GeometryCollection;
+            var value = "badvalue";
+
+            var result = value.ToGeoJsonType();
+
+            Assert.AreNotEqual(target, result);
+        }
     }
 }

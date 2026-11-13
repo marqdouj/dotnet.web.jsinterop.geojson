@@ -1,3 +1,4 @@
+using Marqdouj.DotNet.Web.JsInterop.Extensions;
 using Marqdouj.DotNet.Web.JsInterop.GeoJson;
 using Microsoft.JSInterop;
 using System.Runtime.CompilerServices;
@@ -6,36 +7,20 @@ namespace Sandbox.JsInterop
 {
     public class SandboxJsInterop(IJSRuntime jsRuntime) : IAsyncDisposable
     {
-        private readonly Lazy<Task<IJSObjectReference>> moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/Sandbox.JsInterop/sandbox-jsinterop.js").AsTask());
+        private readonly Lazy<Task<IJSObjectReference>> moduleTask = jsRuntime.CreateModuleTask("./_content/Sandbox.JsInterop/sandbox-jsinterop.js");
 
         public async ValueTask<string> TestGeoJSON(GeoJsonObject feature)
         {
-            var module = await moduleTask.Value;
-            return await module.InvokeAsync<string>(GetJsInteropMethod(), feature);
+            return await moduleTask.InvokeAsyncTC<string>(GetJsInteropMethod(), feature);
         }
 
         public async ValueTask<string> TestGeoJSONString(GeoJsonObject feature)
         {
-            var module = await moduleTask.Value;
             var json = feature.ToJson();
-            return await module.InvokeAsync<string>(GetJsInteropMethod(), json);
+            return await moduleTask.InvokeAsyncTC<string>(GetJsInteropMethod(), json);
         }
 
-        public async ValueTask DisposeAsync()
-        {
-            try
-            {
-                if (moduleTask.IsValueCreated)
-                {
-                    var module = await moduleTask.Value;
-                    await module.DisposeAsync();
-                }
-            }
-            catch (JSDisconnectedException)
-            {
-            }
-        }
+        public async ValueTask DisposeAsync() => await moduleTask.DisposeAsync();
 
         private static string GetJsInteropMethod([CallerMemberName] string name = "")
         {

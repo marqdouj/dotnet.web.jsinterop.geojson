@@ -116,5 +116,25 @@ namespace Marqdouj.DotNet.Web.JsInterop.GeoJson
             //return a == b;
             return enum1 == (GeoJsonType)enum2;
         }
+
+        /// <summary>
+        /// Parses a string as a geometry type, ignoring case.
+        /// </summary>
+        /// <param name="value">The string to parse.</param>
+        /// <returns>The parsed geometry type, or null if the string cannot be parsed.</returns>
+        public static GeometryType? ToGeometryType(this string value)
+        {
+            return Enum.TryParse<GeometryType>(value, true, out var result) ? result : null;
+        }
+
+        /// <summary>
+        /// Converts a string to its corresponding GeoJSON type.
+        /// </summary>
+        /// <param name="value">The string to parse.</param>
+        /// <returns>The corresponding GeoJSON type, or <c>null</c> if the string does not match a GeoJSON type.</returns>
+        public static GeoJsonType? ToGeoJsonType(this string value)
+        {
+            return Enum.TryParse<GeoJsonType>(value, true, out var result) ? result : null;
+        }
     }
 }
