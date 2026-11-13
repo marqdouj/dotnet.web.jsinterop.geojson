@@ -6,15 +6,17 @@
 @implements IAsyncDisposable
 @inject IJSRuntime JSRuntime
 @inject ILogger<GeoJson> Logger 
-@inject IToastService ToastService
+@inject INotificationService ToastService
 @inject IMapDataService DataService
 
 <PageTitle>GeoJSON</PageTitle>
 
-<FluentLayout>
-    <FluentHeader>GeoJSON</FluentHeader>
+<FluentStack Orientation="Orientation.Vertical" Height="100%" VerticalGap="3px">
+    <FluentLayoutItem Area="LayoutArea.Header">
+        GeoJSON
+    </FluentLayoutItem>
 
-    <FluentToolbar>
+    <FluentStack Wrap="true" VerticalAlignment="VerticalAlignment.Center" HorizontalGap="3px">
         <FluentCheckbox @bind-Value="stringifyJson">Stringify Test</FluentCheckbox>
         <FluentButton @onclick="() => TestGeometries(GeometryType.Point)">Point</FluentButton>
         <FluentButton @onclick="() => TestGeometries(GeometryType.MultiPoint)">MultiPoint</FluentButton>
@@ -23,7 +25,7 @@
         <FluentButton @onclick="() => TestGeometries(GeometryType.Polygon)">Polygon</FluentButton>
         <FluentButton @onclick="() => TestGeometries(GeometryType.MultiPolygon)">MultiPolygon</FluentButton>
         <FluentButton @onclick="() => TestGeometries(GeometryType.GeometryCollection)">GeometryCollection</FluentButton>
-    </FluentToolbar>
+    </FluentStack>
 
     <FluentStack Orientation="Orientation.Vertical">
         <FluentCard>
@@ -36,7 +38,7 @@
             <FluentLabel>@(deserializeJson)</FluentLabel>
         </FluentCard>
     </FluentStack>
-</FluentLayout>
+</FluentStack>
 
 @code {
     private SandboxJsInterop? module;
@@ -103,7 +105,7 @@
         {
             testResult = ex.Message;
             Logger.LogError(ex, null);
-            ToastService.ShowError(ex.Message);
+            await ToastService.ShowErrorToastAsync(ex.Message);
         }
     }
 

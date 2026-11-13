@@ -23,6 +23,10 @@
 - See the `Sandbox` project in the source code for examples of how to use the library in a Blazor application.
 
 ### Release Notes
+- `v10.7.1`
+  - `Extension Methods`.
+	- `ToGeometryType`. New method that attempts to parse a string to a `GeometryType`.
+	- `ToGeoJsonType`. New method that attempts to parse a string to a `GeoJsonType`.
 - `v10.7.0`
   - `GeoJsonProperties`. A second constructor has been added that allows you to specify StringComparer.
 - `v10.6.2`
